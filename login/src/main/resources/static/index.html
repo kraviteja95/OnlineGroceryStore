@@ -37,7 +37,7 @@
 			});
 
 			$.get("/login/getCustomUserToken", function (data) {
-				$("#custToken").html(data);
+				$("#serviceToken").html(data);
 				$(".unauthenticated").hide()
 				$(".authenticated").show()
 			}).fail(function () {
@@ -93,20 +93,22 @@
     <strong>Logged in as: <span id="user"></span></strong>
     <br>
     <br>
+    <strong>User Token: </strong>
     <br>
-    <strong>Customer Token: </strong>
     <br>
-    <span id="custToken"></span>
+    <span id="userToken"></span>
     <br>
     <br>
     <strong>Transaction Token: </strong>
     <br>
+    <br>
     <span id="txnToken"></span>
     <br>
     <br>
-    <strong>User Token: </strong>
+    <strong>Service Token: </strong>
     <br>
-    <span id="userToken"></span>
+    <span id="serviceToken"></span>
+    <br>
     <br>
     <button onClick="logout()">Logout</button>
 </div>
@@ -145,6 +147,7 @@
 
     Product Name:<input type="text" name="productName" id="productName">
     Product Quantity:<input type="text" name="productQuantity" id="productQuantity">
+    Product Price:<input type="text" name="productPrice" id="productPrice">
     <input type="button" id="tst" value="Submit Order" onclick="placeOrder()"/>
     <br>
     <br>
@@ -155,15 +158,17 @@
 
 				var productName = document.getElementById('productName').value;
 				var productQuantity = document.getElementById('productQuantity').value;
+				var productPrice = document.getElementById('productPrice').value;
 				var txnToken = document.getElementById('txnToken').innerHTML;
-				var custToken = document.getElementById('custToken').innerHTML;
+				var serviceToken = document.getElementById('serviceToken').innerHTML;
 				var userToken = document.getElementById('userToken').innerHTML;
-				console.log(txnToken + "\n" + custToken + "\n" + userToken);
+				console.log(txnToken + "\n" + serviceToken + "\n" + userToken);
 				var datas = `{
                     "products": [
                         {
                             "productName": "${productName}",
-                            "productQuantity": ${productQuantity}
+                            "productQuantity": "${productQuantity}",
+                            "productPrice": "${productPrice}"
                         }
                     ]
                 }`;
