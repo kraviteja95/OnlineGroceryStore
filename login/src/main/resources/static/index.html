@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Grocery Store</title>
+    <link type="text/css" href="css/style.css" rel="stylesheet"/>
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/js-cookie/js.cookie.js"></script>
+    <script type="text/javascript">
+			$.ajaxSetup({
+				beforeSend: function (xhr, settings) {
+					if (settings.type == 'POST' || settings.type == 'PUT'
+						|| settings.type == 'DELETE') {
+						if (!(/^http:.*/.test(settings.url) || /^https:.*/
+							.test(settings.url))) {
+							// Only send the token to relative URLs i.e. locally.
+							xhr.setRequestHeader("X-XSRF-TOKEN",
+								Cookies.get('XSRF-TOKEN'));
+						}
+					}
+				}
+			});
+			$.get("/login/user", function (data) {
+				$("#user").html(data.userAuthentication.details.name);
+				$("#userSub").html(data.userAuthentication.details.sub);
+				$("#userEmail").html(data.userAuthentication.details.email);
+				$("#provider").html(data.userAuthentication.details.identities[0].provider);
+				$(".unauthenticated").hide()
+				$(".authenticated").show()
+			}).fail(function () {
+				$(".unauthenticated").show()
+				$(".authenticated").hide()
+			});
+
+			$.get("/login/getCustomUserToken", function (data) {
+				$("#custToken").html(data);
+				$(".unauthenticated").hide()
+				$(".authenticated").show()
+			}).fail(function () {
+				$(".unauthenticated").show()
+				$(".authenticated").hide()
+			});
+
+			$.get("/login/userInfo", function (data) {
+				$("#userInfoString").html(data);
+				$(".unauthenticated").hide()
+				$(".authenticated").show()
+			}).fail(function () {
+				$(".unauthenticated").show()
+				$(".authenticated").hide()
+			});
+
+			$.get("/login/userToken", function (data) {
+				$("#userToken").html(data);
+				$(".unauthenticated").hide()
+				$(".authenticated").show()
+			}).fail(function () {
+				$(".unauthenticated").show()
+				$(".authenticated").hide()
+			});
+			$.get("/login/getTxnToken", function (data) {
+				$("#txnToken").html(data);
+				$(".unauthenticated").hide()
+				$(".authenticated").show()
+			}).fail(function () {
+				$(".unauthenticated").show()
+				$(".authenticated").hide()
+			});
+
+			var logout = function () {
+				$.post("/logout", function () {
+					$("#user").html('');
+					$(".unauthenticated").show();
+					$(".authenticated").hide();
+				})
+				return true;
+			}
+
+
+    </script>
+
+</head>
+<div class="container unauthenticated" style="text-align: center;">
+    <strong>Online Grocery Store</strong><br>
+    <a href="/login">LOGIN</a>
+    <br><br>
+</div>
+<div class="container authenticated" style="text-align: center;">
+    <strong>Logged in as: <span id="user"></span></strong>
+    <br>
+    <br>
+    <br>
+    <strong>Customer Token: </strong>
+    <br>
+    <span id="custToken"></span>
+    <br>
+    <br>
+    <strong>Transaction Token: </strong>
+    <br>
+    <span id="txnToken"></span>
+    <br>
+    <br>
+    <strong>User Token: </strong>
+    <br>
+    <span id="userToken"></span>
+    <br>
+    <button onClick="logout()">Logout</button>
+</div>
+
+<div class="container authenticated" style="text-align: left;">
+    <br><b>
+    <font color="green"><strong>Product Details</strong></font>
+</b>
+    <br>
+    <table id="table" border="1">
+        <tr>
+            <th>Product Id</th>
+            <th>Product Name</th>
+            <th>Product Price</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Bread and Butter</td>
+            <td>150</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Rice bag</td>
+            <td>2500</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Cooking Oil</td>
+            <td>1500</td>
+        </tr>
+    </table>
+    <br>
+    <br><b>
+    <font color="green"> Order Details: </font>
+</b><br>
+
+    Product Name:<input type="text" name="productName" id="productName">
+    Product Quantity:<input type="text" name="productQuantity" id="productQuantity">
+    <input type="button" id="tst" value="Submit Order" onclick="placeOrder()"/>
+    <br>
+    <br>
+    <span id="results"></span>
+    <script>
+
+			function placeOrder() {
+
+				var productName = document.getElementById('productName').value;
+				var productQuantity = document.getElementById('productQuantity').value;
+				var txnToken = document.getElementById('txnToken').innerHTML;
+				var custToken = document.getElementById('custToken').innerHTML;
+				var userToken = document.getElementById('userToken').innerHTML;
+				console.log(txnToken + "\n" + custToken + "\n" + userToken);
+				var datas = `{
+                    "products": [
+                        {
+                            "productName": "${productName}",
+                            "productQuantity": ${productQuantity}
+                        }
+                    ]
+                }`;
+
+				$.ajax({
+					url: "/login/order",
+					contentType: "application/json",
+					dataType: 'json',
+					type: "post",
+					data: datas,
+					success: function (data) {
+						alert("Your order is placed Successfully");
+						document.getElementById("results").value = data.value;
+						console.log(data);
+					    }
+				        }).done(function (msg) {
+					    alert('done');
+				    });
+			    }
+
+			function getTxnToken() {
+
+				$.get("/getTxnToken", function (data) {
+					$("#txnToken").html(data);
+				    });
+			    }
+
+
+    </script>
+    <br>
+</div>
+</body>
+
+</html>
