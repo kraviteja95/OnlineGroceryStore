@@ -66,8 +66,7 @@ public class LoginUserAuthenticationController extends WebSecurityConfigurerAdap
     public String userInfo(Principal principal) {
         final OAuth2Authentication oAuth2Authentication = (OAuth2Authentication) principal;
         final Authentication authentication = oAuth2Authentication.getUserAuthentication();
-        // Manually getting the details from the authentication, and returning them as
-        // String.
+        // Manually getting the details from the authentication, and returning them as String.
         return authentication.getDetails().toString();
     }
 
@@ -137,10 +136,10 @@ public class LoginUserAuthenticationController extends WebSecurityConfigurerAdap
      * successful. If credentials are validated successfully, then JWT token will be
      * generated. The token should be returned back to the caller along with the API
      * response. This handler method should return any one of the status messages
-     * basis on different situations: 1. 200(OK) - If login is successful 2.
-     * 401(UNAUTHORIZED) - If login is not successful
-     *
-     * This handler method should map to the URL "/api/v1/auth/login" using HTTP
+     * basis on different situations:
+     * 1. 200(OK) - If login is successful
+     * 2. 401(UNAUTHORIZED) - If login is not successful
+     * This handler method should map to the URL "/login" using HTTP
      * POST method
      */
 

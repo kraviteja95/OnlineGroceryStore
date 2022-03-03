@@ -22,7 +22,6 @@ public class LoginUserAuthenticationServiceImpl implements LoginUserAuthenticati
     /*
      * This method should be used to validate a user using userId and password. Call
      * the corresponding method of Respository interface.
-     *
      */
     @Override
     public User findByUserIdAndPassword(String userId, String password) throws UserNotFoundException {
