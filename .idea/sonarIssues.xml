@@ -8,7 +8,22 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../../13th to 17th September_Microservices Bootcamp/Handson_CaseStudies/OnlineGrocery/account-login-ms-master/pom.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../../13th to 17th September_Microservices Bootcamp/Handson_CaseStudies/OnlineGrocery/account-login-ms-master/src/main/java/com/ibm/login/account/AccountLoginMsApplication.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../13th to 17th September_Microservices Bootcamp/Handson_CaseStudies/OnlineGrocery/account-login-ms-master/src/main/java/com/ibm/login/account/controller/UserAuthenticationController.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../13th to 17th September_Microservices Bootcamp/Handson_CaseStudies/OnlineGrocery/receive-order-ms-master/pom.xml">
           <value>
             <set />
           </value>
@@ -133,6 +148,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/order/src/main/java/com/ibm/order/model/Order.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/order/src/main/java/com/ibm/order/repository/OrderRepository.java">
           <value>
             <set />
@@ -144,6 +164,21 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/order/src/main/resources/application.properties">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../../../Projects at IBM/BPI/Codes/account/pom.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../../../Projects at IBM/BPI/Codes/account/src/main/resources/application.properties">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../../../Projects at IBM/BPI/Codes/debitcard/pom.xml">
           <value>
             <set />
           </value>

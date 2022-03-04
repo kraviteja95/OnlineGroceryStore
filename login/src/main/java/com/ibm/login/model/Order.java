@@ -34,6 +34,10 @@ public class Order {
     @Column(name = "orderDate")
     private LocalDateTime orderDate;
 
+    private String txnToken;
+    private String userToken;
+    private String serviceToken;
+
     public void add(Product product) {
         if (products == null) {
             products = new ArrayList<>();
