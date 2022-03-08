@@ -8,10 +8,10 @@ import com.ibm.login.service.LoginUserAuthenticationServiceImpl;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.http.HttpStatus;
-//import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -118,9 +118,9 @@ public class LoginUserAuthenticationController extends WebSecurityConfigurerAdap
     @PostMapping(value = "/orders")
     public ResponseEntity<Order> receiveOrders(@RequestBody String orderRequest) throws Exception {
         log.info("Here's the request object from UI => " + orderRequest);
-        String message = loginUserAuthenticationServiceImpl.encodeRequest(orderRequest);
-        log.info("Encoded the incoming request from login microservice => " + message);
-        Order orderResponse = restTemplate.postForEntity("http://localhost:9187/add/orders", message, Order.class).getBody();
+        String txnToken = generateJwtTokenFromTheIncomingRequest(orderRequest);
+        log.info("Encoded the incoming JWT token request from login microservice => " + txnToken);
+        Order orderResponse = restTemplate.postForEntity("http://localhost:9187/add/orders", txnToken, Order.class).getBody();
         log.info("Received the response from the Order microservice to the Login microservice => " + orderResponse);
         return new ResponseEntity<Order>(orderResponse, HttpStatus.OK);
     }
@@ -193,6 +193,20 @@ public class LoginUserAuthenticationController extends WebSecurityConfigurerAdap
             .signWith(SignatureAlgorithm.HS384, "secretkey").compact();
 
         return transactionToken;
+    }
+
+    public String generateJwtTokenFromTheIncomingRequest(String request) throws Exception {
+        return Jwts.builder().setSubject(request).setIssuedAt(new Date())
+            .setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME))
+            .signWith(SignatureAlgorithm.HS384, "secretkey").compact();
+    }
+
+    public String getClaims(String jwtToken) {
+        String[] splitToken = jwtToken.split("\\.");
+        String encodedBody = splitToken[1];
+        Base64 base64Url = new Base64(true);
+        String body = new String(base64Url.decode(encodedBody));
+        return body;
     }
 
     public String generateServiceToken(Principal principal) throws Exception {

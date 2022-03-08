@@ -3,6 +3,7 @@ package com.ibm.order.service;
 import com.ibm.order.model.Order;
 import com.ibm.order.model.Product;
 import com.ibm.order.repository.OrderRepository;
+import io.jsonwebtoken.Jwts;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,6 +46,16 @@ public class OrderService {
         cipher.init(Cipher.DECRYPT_MODE, key);
         String decryptedMessage = new String(cipher.doFinal(Base64.decodeBase64(request)), "UTF-8");
         return decryptedMessage;
+    }
+
+    public String decodeTheEncodedJwt(String encodedString) {
+        String[] splitToken = encodedString.split("\\.");
+        String encodedBody = splitToken[1];
+        System.out.println("Here's the encodedBody : " +encodedBody);
+        Base64 base64Url = new Base64(true);
+        String body = new String(base64Url.decode(encodedBody));
+        System.out.println("Here's the body from the JSON : " +body);
+        return body;
     }
 
     public PrivateKey getPrivate(String filename) throws Exception {

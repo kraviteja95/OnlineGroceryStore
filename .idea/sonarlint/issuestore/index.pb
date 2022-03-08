@@ -1,8 +1,6 @@
 
 9
 	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
-=
-order/pom.xml,2\7\27ca9127fd75386d2b0342cfd7de9e3e93791f5b
 }
 Mlogin/src/main/java/com/ibm/login/service/LoginUserAuthenticationService.java,8\7\87593b69df2da2760e372feb29b10a5d04793304
 =
@@ -19,8 +17,6 @@ d
 4login/src/main/java/com/ibm/login/model/Product.java,e\a\eac47fc2d3ac5b8b0677752f14044b7c329e6934
 a
 1login/src/main/java/com/ibm/login/model/User.java,7\0\7095a5c725e648b457b35d9d96479ce52d20a696
-g
-7order/src/main/java/com/ibm/order/OrderApplication.java,4\b\4b141b9a525daac94050b267d317624d548a8a58
 q
 Aorder/src/main/java/com/ibm/order/repository/OrderRepository.java,7\b\7b8bb068cf7cb346469be1f28c2df1ae80b3328f
 d
